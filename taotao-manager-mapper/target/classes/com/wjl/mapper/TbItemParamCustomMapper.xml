@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wjl.mapper.TbItemParamCustomMapper">
+  <resultMap id="BaseResultMap" type="com.wjl.pojo.TbItemParamCustom">
+      <id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <result column="itemCatId" property="itemCatId" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <result column="created" property="created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <result column="updated" property="updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <result column="paramData" property="paramData" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    <association property="tbItemCat" javaType="com.wjl.pojo.TbItemCat">
+    	<id property="id" column="itemCatId" javaType="java.lang.Long" jdbcType="BIGINT"/>
+    	<result property="name" column="itemCatName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </association>
+  </resultMap>
+  
+  
+  <select id="getItemparamList"  resultMap="BaseResultMap">
+    select ip.id,ip.item_cat_id itemCatId,ic.name itemCatName,ip.param_data paramData,ip.created,ip.updated from tb_item_param ip,tb_item_cat ic where ip.item_cat_id = ic.id
+  </select>
+  
+  <!-- 这样的话就是用resultType ,使用resultType就下面哪一个select就行了-->
+  	<!-- private Long id;
+
+    private Long itemCatId;
+
+    private Date created;
+
+    private Date updated;
+
+    private String paramData;
+    
+    private String itemCatName; -->
+  <!-- <select id="getItemparamList"  resultType="com.wjl.pojo.TbItemParamCustom">
+  	select ip.id,ip.item_cat_id itemCatId,ic.name itemCatName,ip.param_data paramData,ip.created,ip.updated from tb_item_param ip,tb_item_cat ic where ip.item_cat_id = ic.id
+    select tb_item_param.*,tb_item_cat.`name` from tb_item_param,tb_item_cat WHERE tb_item_cat.id=tb_item_param.item_cat_id
+  </select> -->
+</mapper>
